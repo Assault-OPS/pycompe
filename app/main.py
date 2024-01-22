@@ -169,7 +169,7 @@ class LoginPage(Screen):
         self.LoginLayout.add_widget(self.Layout2)
         self.LoginLayout.add_widget(
             Label(
-                text="intelliDoc",
+                text="V-Quest",
                 font_size=50,
                 font_name='fonts/BAUHS93.otf'
             )
@@ -261,23 +261,22 @@ class ScanScreen(Screen):
             background_color=(1,1,0,0.5)
 
         )
-        self.DocxButton = MyButton(
-            text="DOCUMENT FILE",
-            pos_hint={'center_x':0.5,'center_y':0.4},
-            background_color=(1,1,0,0.5)
-
-        )
+        # self.DocxButton = MyButton(
+        #     text="DOCUMENT FILE",
+        #     pos_hint={'center_x':0.5,'center_y':0.4},
+        #     background_color=(1,1,0,0.5)
+        # )
         self.BackButton = MyButton(
             text="CANCEL",
             background_color=(1,0,0,0.5)
         )
         self.BrowseButton.bind(on_release=self.Work)
         self.TextButton.bind(on_release=self.switch_to_TextInput)
-        self.DocxButton.bind(on_release=self.switch_to_docx)
+        # self.DocxButton.bind(on_release=self.switch_to_docx)
         self.BackButton.bind(on_release=self.switch_to_MainScreen)
         self.ButtonsLayout.add_widget(self.BrowseButton)
         self.ButtonsLayout.add_widget(self.TextButton)
-        self.ButtonsLayout.add_widget(self.DocxButton)
+        # self.ButtonsLayout.add_widget(self.DocxButton)
         self.ButtonsLayout.add_widget(self.BackButton)
         self.Layout.add_widget(self.ButtonsLayout)
         self.add_widget(self.Layout)
@@ -294,7 +293,7 @@ class ScanScreen(Screen):
         self.ButtonsLayout.clear_widgets()
         self.ButtonsLayout.add_widget(self.BrowseButton)
         self.ButtonsLayout.add_widget(self.TextButton)
-        self.ButtonsLayout.add_widget(self.DocxButton)
+        # self.ButtonsLayout.add_widget(self.DocxButton)
         self.ButtonsLayout.add_widget(self.BackButton)
 
     def switch_to_TextInput(self,*args):
@@ -303,6 +302,7 @@ class ScanScreen(Screen):
 
     def Work(self,*args):
         filename = ScanScreen.askfile()
+        print(filename)
         if filename != '':
             try:
                 if self.imagedisplay is not None:
@@ -310,7 +310,6 @@ class ScanScreen(Screen):
                 if self.GenerateButton is None:
                     self.ButtonsLayout.remove_widget(self.BrowseButton)
                     self.ButtonsLayout.remove_widget(self.TextButton)
-                    self.ButtonsLayout.remove_widget(self.DocxButton)
                     self.BrowButton = MyButton(
                         text='BROWSE FILE',
                         pos_hint={'center_x':0.5,'center_y':0.6},
@@ -332,36 +331,36 @@ class ScanScreen(Screen):
             except AttributeError:
                 pass
     
-    def switch_to_docx(self,*args):
-        filename = ScanScreen.askdocx()
-        if filename != '':
-            try:
-                if self.imagedisplay is not None:
-                    self.Layout.remove_widget(self.imagedisplay)
-                if self.GenerateButton is None:
-                    self.ButtonsLayout.remove_widget(self.BrowseButton)
-                    self.ButtonsLayout.remove_widget(self.TextButton)
-                    self.ButtonsLayout.remove_widget(self.DocxButton)
-                    self.BrowButton = MyButton(
-                        text='BROWSE FILE',
-                        pos_hint={'center_x':0.5,'center_y':0.6},
-                        background_color=(0,1,1,0.5)
-                    )
-                    self.GenerateButton = MyButton(
-                        text='GENERATE QNA',
-                        pos_hint={'center_x':0.5,'center_y':0.5},
-                        background_color=(0,1,1,0.5)
-                    )
-                    self.GenerateButton.bind(
-                        on_release=lambda instance: Clock.schedule_once(lambda unknown:self.ProcessDocument(url,filename,'docx'))
-                    )
-                    self.BrowButton.bind(on_release=self.switch_to_docx)
-                    self.ButtonsLayout.add_widget(self.GenerateButton)
-                    self.ButtonsLayout.add_widget(self.BrowButton)
-                self.imagedisplay = Image(source='assets/docx.png',pos_hint={'center_x':0.5,'center_y':0.5})
-                self.Layout.add_widget(self.imagedisplay)
-            except AttributeError:
-                pass
+    # def switch_to_docx(self,*args):
+    #     filename = ScanScreen.askdocx()
+    #     if filename != '':
+    #         try:
+    #             if self.imagedisplay is not None:
+    #                 self.Layout.remove_widget(self.imagedisplay)
+    #             if self.GenerateButton is None:
+    #                 self.ButtonsLayout.remove_widget(self.BrowseButton)
+    #                 self.ButtonsLayout.remove_widget(self.TextButton)
+    #                 self.ButtonsLayout.remove_widget(self.DocxButton)
+    #                 self.BrowButton = MyButton(
+    #                     text='BROWSE FILE',
+    #                     pos_hint={'center_x':0.5,'center_y':0.6},
+    #                     background_color=(0,1,1,0.5)
+    #                 )
+    #                 self.GenerateButton = MyButton(
+    #                     text='GENERATE QNA',
+    #                     pos_hint={'center_x':0.5,'center_y':0.5},
+    #                     background_color=(0,1,1,0.5)
+    #                 )
+    #                 self.GenerateButton.bind(
+    #                     on_release=lambda instance: Clock.schedule_once(lambda unknown:self.ProcessDocument(url,filename,'docx'))
+    #                 )
+    #                 self.BrowButton.bind(on_release=self.switch_to_docx)
+    #                 self.ButtonsLayout.add_widget(self.GenerateButton)
+    #                 self.ButtonsLayout.add_widget(self.BrowButton)
+    #             self.imagedisplay = Image(source='assets/docx.png',pos_hint={'center_x':0.5,'center_y':0.5})
+    #             self.Layout.add_widget(self.imagedisplay)
+    #         except AttributeError:
+    #             pass
 
     @staticmethod
     def askfile():
@@ -475,7 +474,7 @@ class TextScreen(Screen):
         self.add_widget(self.Layout)
 
     def switch_to_ScanScreen(self, *args):
-        self.manager.transition = SlideTransition(direction='left')
+        self.manager.transition = SlideTransition(direction='right')
         self.manager.current = 'scan'
     def switch_to_MainScreen(self,*args):
         self.manager.transition = SlideTransition(direction='right')
@@ -505,7 +504,7 @@ class TextScreen(Screen):
 
 class MyApp(App):
     def build(self):
-        self.title = 'intelliDoc'
+        self.title = 'V-Quest'
         ParentLayout = Interface()
         screen_manager = ScreenManager()
         loginScreen = LoginPage(name='login')
